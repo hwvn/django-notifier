@@ -54,9 +54,10 @@ def create_notification(name, display_name=None,
         n.name = name
         n.display_name = display_name
         n.public = public
-        n.permissions = permissions
-        n.backends = backends
+
         n.save()
+        n.permissions.set(permissions)
+        n.backends.set(backends)
 
     return n
 
