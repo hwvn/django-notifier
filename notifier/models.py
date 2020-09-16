@@ -298,9 +298,9 @@ class GroupPrefs(BaseModel):
 
     If notification is not explicitly set to True, then default to False.
     """
-    group = models.ForeignKey(Group)
-    notification = models.ForeignKey(Notification)
-    backend = models.ForeignKey(Backend)
+    group = models.ForeignKey(Group,on_delete=models.CASCADE)
+    notification = models.ForeignKey(Notification,on_delete=models.CASCADE)
+    backend = models.ForeignKey(Backend,on_delete=models.CASCADE)
     notify = models.BooleanField(default=True)
 
     class Meta:
@@ -321,9 +321,9 @@ class UserPrefs(BaseModel):
     Supercedes group setting.
     If notification preference is not explicitly set, then use group setting.
     """
-    user = models.ForeignKey(settings.AUTH_USER_MODEL)
-    notification = models.ForeignKey(Notification)
-    backend = models.ForeignKey(Backend)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
+    notification = models.ForeignKey(Notification,on_delete=models.CASCADE)
+    backend = models.ForeignKey(Backend,on_delete=models.CASCADE)
     notify = models.BooleanField(default=True)
 
     objects = managers.UserPrefsManager()
@@ -349,10 +349,10 @@ class SentNotification(BaseModel):
     Record of every notification sent.
     Either user or to should be filled in.
     """
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, blank=True)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, blank=True, on_delete=models.CASCADE)
     to = models.CharField(max_length=255, null=True, blank=True)
-    notification = models.ForeignKey(Notification)
-    backend = models.ForeignKey(Backend)
+    notification = models.ForeignKey(Notification,on_delete=models.CASCADE)
+    backend = models.ForeignKey(Backend,on_delete=models.CASCADE)
     success = models.BooleanField(default=False)
     read = models.BooleanField(default=False)
 
